@@ -1,0 +1,210 @@
+<!-- SPDX-License-Identifier: Apache-2.0 --> 
+
+<!DOCTYPE html>
+<html> 
+  <head>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperledger Fabric Vehicle Application</title>
+    <link rel="icon" href="favicon.png" type="image/gif">
+
+    <!-- require jquery and bootstrap scripts -->
+ 
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <!-- adding style here -->
+    <style type="text/css">
+      header{
+        background-color: black;
+        font-size:30px;
+        padding:10px;
+      }
+      header, .form-group{
+        margin-bottom: 3%;
+        
+      }     
+    
+      #body{
+        margin-left:1%;
+        margin-right:1%;
+      }
+      .form-control{
+        margin: 8px;
+      }
+      #right_header{
+        width:20%;
+        font-size:15px;
+        margin-right:0px;
+      }
+      #left_header,#left_header2{
+        margin-left:5;
+        
+        display:inline-block;
+        color:white!important;
+      }
+      #id {
+        width:49%;
+        display: inline-block;
+      }
+      table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+      }
+      td, th {
+          border: 1px solid #dddddd;
+          text-align: center;
+          padding: 8px;
+      }
+      th{width:150px;}
+
+     
+      @media (max-width:600px){
+        #left_header2{
+          display:none;
+        }
+      }
+
+      @media (max-width:600px){
+        #label{
+          font-size:18px!important;
+        }
+      }
+    .btn-link,.btn-link:hover{color:white; font-size:25px;margin:0px;padding:0px;}
+    
+    h2{padding-left:15px;}
+
+    </style>
+  </head>
+  <body ng-app="application" ng-controller="appController">
+    <header class="masthead" style="background-image: url('./car.jpg'); background-position:center center; height:170px; background-repeat:no-repeat; ">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <a href="http://localhost:8000/app">
+          <h5 style="color:white;">VEHICLE HISTORY</h5>
+          </a>
+        </div>
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="site-heading" style="text-align:center;" >
+              <h1 style="color:white; text-align:center;">History of the Vehicle</h1>
+              <span style="color:white;" class="subheading" >Check Details</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container-fluid" style="margin:10px 5px 10px 5px;">
+
+    <div id="body" style="margin-bottom:20px">
+   
+
+      <div class = "row" style ="margin-right:5px; margin-left:2px;">
+      <div class="col-lg-6 col-md-10 mx-auto">
+      <div class = "input-group" >
+          <label class="input-group-text" style="border-radius:0px; background:#343a40; color:white;" for="createName">Enter S/N :</label>
+          <input class="form-control" style="margin:0px;" id="createName"  placeholder="Vehicle S/N" ng-model="sn">
+          <div class="input-group-append">
+          <input id="querySubmit" type="submit" value="Search" class="btn btn-dark btn-sm" ng-click="carHistory()">
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+    
+      
+      <div style = "padding-left:10px; padding-right:10px;">
+      <h2>Vehicle Info</h2>
+      <div class = "col-sm-12">
+      <table id="query_trade" class="table" align="center" > 
+        <tr>
+          <th>Manufacture</th>
+          <th>Factory</th>
+          <th>Vehicle Name</th>
+          <th>Type</th>
+          <th>Exhaust Volume</th>
+          <th>Fuel</th>
+          <th>Txid</th>
+          <th>Time</th>
+        </tr>
+        <tr id = "history" ng-repeat="c in car_History | orderBy:$index:true" ng-if="$last">
+          <td>{{c.Value.manufacture}}</td>
+          <td>{{c.Value.factory}}</td>
+          <td>{{c.Value.name}}</td>
+          <td>{{c.Value.vehicletype}}</td>
+          <td>{{c.Value.volume}}</td>
+          <td>{{c.Value.fuel}}</td>
+          <td>{{c.TxId}}</td>
+          <td>{{c.Timestamp}}</td>
+        <tr>
+        </tr>
+      </table>
+      <hr>
+      </div>
+      </div>
+
+   <div style = "padding-left:10px; padding-right:10px;">
+     <h2>Vehicle History</h2>
+      <div class = "col-sm-12">
+      <table id="query_trade" class="table" align="center" > 
+        <tr>
+          <th>Government</th>
+          <th>Plate</th>
+          <th>Owner</th>
+          <th>Trade History</th>
+          <th>Price</th>
+          
+          <th>Repair Details</th>
+          <th>Repair Costs</th>
+          <th>Repair Shop</th>
+          <th>Accident Details</th>
+          <th>Handdling Costs</th>
+          <th>Insurance Company</th>
+
+          <th>Time</th>
+        </tr>
+        <tr id = "history" ng-repeat="c in car_History | orderBy:$index:true" ng-hide="$last">
+          <td>{{c.Value.government}}</td>
+          <td>{{c.Value.plate}}</td>
+          <td>{{c.Value.owner}}</td>
+          <td>{{c.Value.tradehistory}}</td>
+          <td>{{c.Value.price}}</td>
+
+          <td>{{c.Value.repair}}</td>
+          <td>{{c.Value.repaircosts}}</td>
+          <td>{{c.Value.shop}}</td>
+
+          <td>{{c.Value.accident}}</td>
+          <td>{{c.Value.handdlingcosts}}</td>
+          <td>{{c.Value.insurance}}</td>
+         
+          <td>{{c.Timestamp}}</td>
+        <tr>
+        </tr>
+      </table>
+      <hr>
+      </div>
+      </div>
+</div>
+         
+    </div>
+    
+  </body>
+    <!-- requiring the angular page -->
+    <script type="text/javascript" src="app.js"> </script>
+</html>
