@@ -65,7 +65,7 @@ return{
 		            res.send("Could not found Contract_ID")
 
 		        } else {
-		            console.log("Response is ", query_responses[0].toString());
+		            console.log("Response is Success");
 		            res.send(query_responses[0].toString())
 		        }
 		    } else {
@@ -130,7 +130,7 @@ return{
 		        if (query_responses[0] instanceof Error) {
 		            console.error("error from query = ", query_responses[0]);
 		        } else {
-		            console.log("Response is ", query_responses[0].toString());
+		            console.log("Response is Success");
 		            res.json(JSON.parse(query_responses[0].toString()));
 		        }
 		    } else {
@@ -326,8 +326,9 @@ return{
 		var government = array[1]
 		var plate = array[2]
 		var owner = array[3]
-		var tradehistory = array[4]
-		var price = array[5];
+		var rrnum = array[4]
+		var tradehistory = array[5]
+		var price = array[6];
 
 		var fabric_client = new Fabric_Client();
 
@@ -373,7 +374,7 @@ return{
 		        //targets : --- letting this default to the peers assigned to the channel
 		        chaincodeId: 'vehicle-app',
 		        fcn: 'Change',
-		        args: [key, government, plate, owner, tradehistory, price],
+		        args: [key, government, plate, owner, rrnum, tradehistory, price],
 		        chainId: 'mychannel',
 		        txId: tx_id
 		    };

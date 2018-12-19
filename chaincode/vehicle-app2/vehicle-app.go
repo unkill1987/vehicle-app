@@ -26,6 +26,7 @@ type Vehicle struct {
 	Government 		string `json:"government"`
 	Plate 			string `json:"plate"`
 	Owner 			string `json:"owner"`
+	Rrnum 			string `json:"rrnum"`
 	Tradehistory 	string `json:"tradehistory"`
 	Price 			string `json:"price"`
 
@@ -169,16 +170,17 @@ func (s *SmartContract) Newcar(APIstub shim.ChaincodeStubInterface, args []strin
 
 func (s *SmartContract) Change(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	if len(args) != 6 {
-		return shim.Error("Incorrect number of arguments. you should input 6")
+	if len(args) != 7 {
+		return shim.Error("Incorrect number of arguments. you should input 7")
 	}
 
 	sn := args[0]
 	government := strings.ToLower(args[1])
 	plate := strings.ToLower(args[2])
 	owner := strings.ToLower(args[3])
-	tradehistory := strings.ToLower(args[4])
-	price := strings.ToLower(args[5])
+	rrnum := strings.ToLower(args[4])
+	tradehistory := strings.ToLower(args[5])
+	price := strings.ToLower(args[6])
 	fmt.Println("changes from", sn)
 
 	vehicleAsBytes, err := APIstub.GetState(sn)
@@ -195,6 +197,7 @@ func (s *SmartContract) Change(APIstub shim.ChaincodeStubInterface, args []strin
 	vehicleRecord.Government = government
 	vehicleRecord.Plate = plate
 	vehicleRecord.Owner = owner
+	vehicleRecord.Rrnum = rrnum
 	vehicleRecord.Tradehistory = tradehistory
 	vehicleRecord.Price = price
 
@@ -243,6 +246,7 @@ func (s *SmartContract) Repair(APIstub shim.ChaincodeStubInterface, args []strin
 	vehicleRecord.Government = ""
 	vehicleRecord.Plate = ""
 	vehicleRecord.Owner = ""
+	vehicleRecord.Rrnum = ""
 	vehicleRecord.Tradehistory = ""
 	vehicleRecord.Price = ""
 	
@@ -292,6 +296,7 @@ func (s *SmartContract) Accident(APIstub shim.ChaincodeStubInterface, args []str
 	vehicleRecord.Government = ""
 	vehicleRecord.Plate = ""
 	vehicleRecord.Owner = ""
+	vehicleRecord.Rrnum = ""
 	vehicleRecord.Tradehistory = ""
 	vehicleRecord.Price = ""
 
